@@ -1,0 +1,29 @@
+{
+  "name": "ferramentaria-cypress",
+  "version": "1.0.0",
+  "description": "Projeto de ponta a ponta no Portal Ferramentaria.",
+  "main": "index.js",
+  "author": "Matheus Batista dos Santos",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "cypress": "^13.6.0",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress-plugin-tab": "^1.0.5",
+    "dayjs": "^1.11.9",
+    "fs": "^0.0.1-security",
+    "mocha-junit-reporter": "^2.2.1",
+    "moment": "^2.29.4",
+    "multiple-cucumber-html-reporter": "^3.6.2",
+    "tedious": "^16.4.0"
+  },
+  "scripts": {
+    "test:FULL:dev": "npx cypress run --browser edge --reporter junit --env BASE_URL=URL_PROJETO,API=URL_API_PROJETO",
+    "test:FULL:hom": "npx cypress run --browser edge --reporter junit --env BASE_URL=URL_PROJETO,API=URL_API_PROJETO",
+    "test:local": "npx cypress open --env BASE_URL=URL_PROJETO,API=URL_API_PROJETO",
+    "test:parallel": "concurrently \"npm run test:FULL:dev\" \"npm run test:FULL:hom\"",
+    "test:especifico": "npx cypress run --browser edge --spec \"cypress/features/dummy.feature\" --env BASE_URL=URL_PROJETO,API=URL_API_PROJETO",
+    "report-cucumber": "node cucumber-html-report.js"
+  }
+
+}

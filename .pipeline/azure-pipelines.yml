@@ -1,0 +1,113 @@
+parameters:
+- name: features
+  displayName: Parametro de Execução
+  type: string
+  values:
+  - DUMMY
+
+trigger:
+  branches:
+    include:
+      - dev
+      - homolog
+      
+stages:
+- stage: __default
+  jobs:
+
+  - job: XXX
+    pool: XXX
+    timeoutInMinutes: 10000
+
+    steps:
+    
+      - task: DownloadSecureFile@1
+        inputs:
+            secureFile: 'fixtures.zip'
+
+      - task: CopyFiles@2
+        displayName: 'Copiar arquivos para o diretório cypress/fixtures'
+        inputs:
+          SourceFolder: '$(Agent.TempDirectory)'
+          Contents: '*.zip'
+          TargetFolder: 'cypress/fixtures'
+
+      - task: PowerShell@2
+        inputs:
+          targetType: 'inline'
+          script: |
+            $zipFilePath = "$(System.DefaultWorkingDirectory)\cypress\fixtures\fixtures.zip"
+            $extractPath = "$(System.DefaultWorkingDirectory)\cypress\fixtures"
+            Expand-Archive -Path $zipFilePath -DestinationPath $extractPath
+        displayName: 'Extrair arquivos .zip'
+        
+      - task: Npm@1
+        displayName: Instalando dependencias NPM
+        inputs:
+          verbose: false
+
+      - task: Npm@1
+        displayName: Execucao Teste DEV
+        continueOnError: True
+        inputs:
+          command: custom
+          verbose: false
+          customCommand: run test:${{ parameters.features }}:dev
+        condition: eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+      
+      - task: Npm@1
+        displayName: Execucao Teste HOMOLOG
+        continueOnError: True
+        inputs:
+          command: custom
+          verbose: false
+          customCommand: run test:${{ parameters.features }}:hom
+        condition: eq(variables['Build.SourceBranch'], 'refs/heads/homolog')
+
+      - task: PublishTestResults@2
+        displayName: 'Geracao Relatorio JUnit'
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: |
+            $(System.DefaultWorkingDirectory)/results/*.xml
+          searchFolder: '$(System.DefaultWorkingDirectory)/results'
+          publishRunAttachments: true
+        
+      - task: PowerShell@2
+        inputs:
+          targetType: 'inline'
+          script: |
+            New-Item -ItemType Directory -Path "$(Build.ArtifactStagingDirectory)\screenshots" -Force
+            New-Item -ItemType Directory -Path "$(Build.ArtifactStagingDirectory)\videos" -Force
+        displayName: 'Criando pasta para armazenar screenshots e videos'
+
+      - task: PowerShell@2
+        inputs:
+          targetType: 'inline'
+          script: |
+            if (Test-Path -Path "$(System.DefaultWorkingDirectory)/cypress/screenshots") {
+                Copy-Item -Path "$(System.DefaultWorkingDirectory)/cypress/screenshots/*" -Destination "$(Build.ArtifactStagingDirectory)/screenshots" -Recurse
+            } else {
+                Write-Host "Não foram geradas screenshots."
+            }
+        displayName: 'Copiando screenshots'
+
+      - task: PowerShell@2
+        inputs:
+          targetType: 'inline'
+          script: |
+            if (Test-Path -Path "$(System.DefaultWorkingDirectory)/cypress/videos") {
+                Copy-Item -Path "$(System.DefaultWorkingDirectory)/cypress/videos/*" -Destination "$(Build.ArtifactStagingDirectory)/videos" -Recurse
+            } else {
+                Write-Host "Não foram gerados videos."
+            }
+        displayName: 'Copiando videos'
+
+      - publish: $(Build.ArtifactStagingDirectory)/screenshots
+        artifact: Screenshots
+        displayName: 'Publicando screenshots copiadas'
+
+      - publish: $(Build.ArtifactStagingDirectory)/videos
+        artifact: Videos
+        displayName: 'Publicando videos copiados'
