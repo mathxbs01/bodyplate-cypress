@@ -3,7 +3,7 @@
     "step_definitions": "cypress/StepsDefinitions",
     "cucumberJson": {
         "generate": "true",
-        "outputFolder": "cypress/cucumber-json",
+        "outputFolder": "cypress/CucumberJson",
         "filePrefix": "",
         "fileSuffix": ".cucumber"
     }

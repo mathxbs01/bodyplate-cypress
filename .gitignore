@@ -45,7 +45,7 @@ Thumbs.db
 /cucumber-htmlreport
 
 #Cucumber 
-/cypress/cucumber-json/*
+/cypress/CucumberJson
 
 #JUnit
 /results/*
