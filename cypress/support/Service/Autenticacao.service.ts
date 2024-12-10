@@ -1,29 +1,25 @@
-// <reference types="cypress"/>
+/// <reference types="cypress"/>
 const APIUrl = Cypress.env("API");
 const API = APIUrl;
-let usuario;
+let usuario: any;
+
 beforeEach(() => {
-  cy.fixture("dummy/dummy.json").then((acessos) => {
+  cy.fixture("Acessos/acesso.json").then((acessos) => {
     usuario = acessos;
   });
 });
 
-class AutorizacaoService {
-  autorizacaoToken(perfil) {
+export class AutorizacaoService {
+  autorizacaoToken() {
     let token;
-    let usuarioCredenciais = {
-      DUMMY: usuario.dummy,
-    };
-
-    const valorPerfil = usuarioCredenciais[perfil];
 
     return cy
       .request({
         method: "POST",
         url: `${API}/v1/DUMMY/AUTENTICACAODUMMY`,
         body: {
-          USER: valorPerfil.USER,
-          PASSWORD: valorPerfil.PASSWORD,
+          USER: usuario.email,
+          PASSWORD: usuario.senha,
         },
         failOnStatusCode: false,
       })
@@ -33,4 +29,3 @@ class AutorizacaoService {
       });
   }
 }
-export { AutorizacaoService };

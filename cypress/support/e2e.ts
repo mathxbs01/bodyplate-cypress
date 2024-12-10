@@ -1,9 +1,9 @@
 /// <reference types="cypress"/>
 
-import "./commands/dummy_commands";
-import "./commands/dummy_autenticacao_commands";
-import "./service/dummy_autenticacao.service";
-import "./service/common.service";
+import "./Commands/Common/Commands";
+import "./Commands/AutenticacaoCommands";
+import "./Service/Autenticacao.service";
+import "./Service/Common/Common.service";
 
 import { beforeEach } from "mocha";
 require("cypress-plugin-tab");

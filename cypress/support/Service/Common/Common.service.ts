@@ -1,42 +1,42 @@
 /// <reference types="cypress"/>
-import { AutorizacaoService } from "./dummy_autenticacao.service";
+import { AutorizacaoService } from "../Autenticacao.service";
 const autorizacaoService = new AutorizacaoService();
 
 const APIUrl = Cypress.env("API");
 const API = APIUrl;
 
-let APIGet = {
+let APIGet: any = {
   DUMMY: `${API}/v1/DUMMY`,
 };
 
-let APIFiltered = {
+let APIFiltered: any = {
   DUMMYFiltered: `${API}/v1/DUMMY`,
 };
 
-let APIPost = {
+let APIPost: any = {
   DUMMYPost: `${API}/v1/DUMMY`,
 };
 
-let APIDelete = {
+let APIDelete: any = {
   DUMMYDelete: `${API}/v1/DUMMY`,
 };
 
-let APIPut = {
+let APIPut: any = {
   DUMMYPut: `${API}/v1/DUMMY`,
 };
 
-const todosPost = {
+const todosPost: any = {
   ...APIFiltered,
   ...APIPost,
 };
 
-class httpClient {
-  useGet(nome, params, perfil) {
+export class httpClient {
+  useGet(nome: string, params: string) {
     let url = APIGet[nome];
     let uri;
     let token;
     params != undefined ? (uri = `${url}/${params}`) : (uri = `${url}`);
-    return autorizacaoService.autorizacaoToken(perfil).then((x) => {
+    return autorizacaoService.autorizacaoToken().then((x) => {
       token = x;
       cy.request({
         method: "GET",
@@ -49,10 +49,10 @@ class httpClient {
     });
   }
 
-  usePost(nome, body, perfil) {
+  usePost(nome: string, body: any) {
     let uri = todosPost[nome];
     let token;
-    return autorizacaoService.autorizacaoToken(perfil).then((x) => {
+    return autorizacaoService.autorizacaoToken().then((x) => {
       token = x;
       cy.request({
         method: "POST",
@@ -66,12 +66,12 @@ class httpClient {
     });
   }
 
-  useDelete(nome, params, perfil) {
+  useDelete(nome: string, params: string) {
     let url = APIDelete[nome];
     let uri;
     let token;
     params != undefined ? (uri = `${url}${params}`) : (uri = `${url}`);
-    return autorizacaoService.autorizacaoToken(perfil).then((x) => {
+    return autorizacaoService.autorizacaoToken().then((x) => {
       token = x;
       cy.request({
         method: "DELETE",
@@ -84,18 +84,18 @@ class httpClient {
     });
   }
 
-  usePut(nome, params, body, perfil) {
+  usePut(nome: string, params: string, body: any) {
     let url = APIPut[nome];
     let uri;
     let token;
-    const active = {
+    const active: any = {
       FuncionarioPut: `${url}${params}/Active`,
     };
     active[nome] == undefined
       ? (uri = `${url}/${params}`)
       : (uri = active[nome]);
 
-    return autorizacaoService.autorizacaoToken(perfil).then((x) => {
+    return autorizacaoService.autorizacaoToken().then((x) => {
       token = x;
       cy.request({
         method: "PUT",
@@ -109,5 +109,3 @@ class httpClient {
     });
   }
 }
-
-export { httpClient };
