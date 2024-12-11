@@ -35,6 +35,6 @@ export default defineConfig({
     defaultCommandTimeout: 15000,
     requestTimeout: 100000,
 
-    supportFile: "cypress/support/e2e.ts",
+    supportFile: "cypress/Supports/e2e.ts",
   },
 });
