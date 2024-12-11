@@ -53,6 +53,4 @@ Thumbs.db
 #Cypress
 /cypress/screenshots
 /cypress/videos
-/cypress/fixtures/*
-!/cypress/fixtures/dummyFile
 /cypress/downloads
