@@ -3,7 +3,6 @@
 import { AutorizacaoService } from "../Service/Autenticacao.service";
 const autorizacaoService = new AutorizacaoService();
 let usuario;
-let token;
 
 beforeEach(() => {
   cy.fixture("Acessos/acesso").then((acessos) => {
@@ -11,8 +10,6 @@ beforeEach(() => {
   });
 });
 
-Cypress.Commands.add("GetToken", () => {
+Cypress.Commands.add("getToken", () => {
   autorizacaoService.autorizacaoToken();
 });
-
-export { token };
