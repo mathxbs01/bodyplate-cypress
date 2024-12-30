@@ -33,7 +33,7 @@ E("que estou na página de {string}", (tela) => {
   cy.wait(500);
 
   const urlByTela: Record<string, string> = {
-    Login: URL,
+    Login: URL + "/login",
     "Esqueci senha": URL + "/recovery-password",
   };
 
