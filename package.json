@@ -14,14 +14,15 @@
     "mocha-junit-reporter": "^2.2.1",
     "moment": "^2.29.4",
     "multiple-cucumber-html-reporter": "^3.6.2",
+    "report": "^0.1.1",
     "tedious": "^16.4.0"
   },
   "scripts": {
-    "test:FULL:dev": "npx cypress run --browser edge --reporter junit --env BASE_URL=https://mgr-dev-timekeeping-portal.mgr.services,API=https://mgr-dev-timekeeping-api.mgr.services",
-    "test:FULL:hom": "npx cypress run --browser edge --reporter junit --env BASE_URL=https://mgr-dev-timekeeping-portal.mgr.services,API=https://mgr-dev-timekeeping-api.mgr.services",
-    "test:local": "npx cypress open --env BASE_URL=https://mgr-dev-timekeeping-portal.mgr.services,API=https://mgr-dev-timekeeping-api.mgr.services",
-    "test:parallel": "concurrently \"npm run test:FULL:dev\" \"npm run test:FULL:hom\"",
-    "test:especifico": "npx cypress run --browser edge --spec \"cypress/features/dummy.feature\" --env BASE_URL=https://mgr-dev-timekeeping-portal.mgr.services,API=https://mgr-dev-timekeeping-api.mgr.services",
+    "test:FULL:dev": "npx cypress run --browser edge --reporter junit --env BASE_URL=https://mgr-dev-dix-aeroportos-portal.mgr.services,API=https://mgr-dev-dix-aeroportos-api.mgr.services/api/",
+    "test:local": "npx cypress open --env BASE_URL=https://mgr-dev-dix-aeroportos-portal.mgr.services,API=https://mgr-dev-dix-aeroportos-api.mgr.services/api/",
+    "test:parallel": "concurrently \"npm run test:login\" \"npm run test:esqueciSenha\"",
+    "test:esqueciSenha": "npx cypress run --browser edge --spec \"cypress/features/esqueciSenha.feature\" --env BASE_URL=https://mgr-dev-dix-aeroportos-portal.mgr.services,API=https://mgr-dev-dix-aeroportos-api.mgr.services/api/",
+    "test:login": "npx cypress run --browser edge --spec \"cypress/features/login.feature\" --env BASE_URL=https://mgr-dev-dix-aeroportos-portal.mgr.services,API=https://mgr-dev-dix-aeroportos-api.mgr.services/api/",
     "report-cucumber": "node cucumber-html-report.js"
   },
   "devDependencies": {

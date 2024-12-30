@@ -12,7 +12,7 @@ export interface IEsqueciSenhaPageElementsLink {
 }
 
 export const defaultEsqueciSenhaElementInput: IEsqueciSenhaPageElementsInput = {
-  Email: "#email",
+  Email: 'app-modal-input input[name="e-mail"]',
 };
 
 export const defaultEsqueciSenhaElementBotao: IEsqueciSenhaPageElementsBotao = {

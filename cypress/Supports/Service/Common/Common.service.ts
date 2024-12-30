@@ -1,111 +1,90 @@
 /// <reference types="cypress"/>
-import { AutorizacaoService } from "../Autenticacao.service";
-const autorizacaoService = new AutorizacaoService();
+import { IAPIDelete, IAPIGet, IAPIPost, IAPIPut } from "./common.model";
 
 const APIUrl = Cypress.env("API");
 const API = APIUrl;
+let token: string;
 
-let APIGet: any = {
-  DUMMY: `${API}/v1/DUMMY`,
-};
+let APIGet: IAPIGet = {};
 
-let APIFiltered: any = {
-  DUMMYFiltered: `${API}/v1/DUMMY`,
-};
+let APIPost: IAPIPost = {};
 
-let APIPost: any = {
-  DUMMYPost: `${API}/v1/DUMMY`,
-};
+let APIDelete: IAPIDelete = {};
 
-let APIDelete: any = {
-  DUMMYDelete: `${API}/v1/DUMMY`,
-};
+let APIPut: IAPIPut = {};
 
-let APIPut: any = {
-  DUMMYPut: `${API}/v1/DUMMY`,
-};
+export class HttpClient {
+  constructor() {
+    token = Cypress.env("TokenCypress") ?? "";
+  }
 
-const todosPost: any = {
-  ...APIFiltered,
-  ...APIPost,
-};
-
-export class httpClient {
-  useGet(nome: string, params: string) {
+  useGet(nome: keyof IAPIGet, params: any) {
+    token = Cypress.env("TokenCypress") ?? "";
     let url = APIGet[nome];
-    let uri;
-    let token;
-    params != undefined ? (uri = `${url}/${params}`) : (uri = `${url}`);
-    return autorizacaoService.autorizacaoToken().then((x) => {
-      token = x;
-      cy.request({
+    let uri = params ? url + "?" + new URLSearchParams(params).toString() : url;
+
+    return cy
+      .request({
         method: "GET",
         url: uri,
         headers: { Authorization: `Bearer ${token}` },
         failOnStatusCode: false,
-      }).then((response) => {
+      })
+      .then((response) => {
         return response;
       });
-    });
   }
 
-  usePost(nome: string, body: any) {
-    let uri = todosPost[nome];
-    let token;
-    return autorizacaoService.autorizacaoToken().then((x) => {
-      token = x;
-      cy.request({
+  usePost(nome: keyof IAPIPost, body: any, params?: any) {
+    token = Cypress.env("TokenCypress") ?? "";
+    let url = APIPost[nome];
+    let uri = params ? url + "?" + new URLSearchParams(params).toString() : url;
+
+    return cy
+      .request({
         method: "POST",
         url: uri,
         headers: { Authorization: `Bearer ${token}` },
         body: body,
         failOnStatusCode: false,
-      }).then((response) => {
+      })
+      .then((response) => {
         return response;
       });
-    });
   }
 
-  useDelete(nome: string, params: string) {
+  useDelete(nome: keyof IAPIDelete, params: string) {
+    token = Cypress.env("TokenCypress") ?? "";
     let url = APIDelete[nome];
-    let uri;
-    let token;
-    params != undefined ? (uri = `${url}${params}`) : (uri = `${url}`);
-    return autorizacaoService.autorizacaoToken().then((x) => {
-      token = x;
-      cy.request({
+    let uri = `${url}?${params}`;
+
+    return cy
+      .request({
         method: "DELETE",
         url: uri,
         headers: { Authorization: `Bearer ${token}` },
         failOnStatusCode: false,
-      }).then((response) => {
+      })
+      .then((response) => {
         return response;
       });
-    });
   }
 
-  usePut(nome: string, params: string, body: any) {
+  usePut(nome: keyof IAPIPut, body: any, params?: any) {
+    token = Cypress.env("TokenCypress") ?? "";
     let url = APIPut[nome];
-    let uri;
-    let token;
-    const active: any = {
-      FuncionarioPut: `${url}${params}/Active`,
-    };
-    active[nome] == undefined
-      ? (uri = `${url}/${params}`)
-      : (uri = active[nome]);
+    let uri = params ? url + "?" + new URLSearchParams(params).toString() : url;
 
-    return autorizacaoService.autorizacaoToken().then((x) => {
-      token = x;
-      cy.request({
+    return cy
+      .request({
         method: "PUT",
         url: uri,
         headers: { Authorization: `Bearer ${token}` },
         body: body,
         failOnStatusCode: false,
-      }).then((response) => {
+      })
+      .then((response) => {
         return response;
       });
-    });
   }
 }

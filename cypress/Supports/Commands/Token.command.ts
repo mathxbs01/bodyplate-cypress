@@ -1,15 +1,26 @@
 /// <reference types="cypress"/>
 
-import { AutorizacaoService } from "../Service/Autenticacao.service";
-const autorizacaoService = new AutorizacaoService();
 let usuario;
-
-beforeEach(() => {
-  cy.fixture("Acessos/acesso").then((acessos) => {
-    usuario = acessos;
-  });
-});
+let API = Cypress.env("API");
 
 Cypress.Commands.add("getToken", () => {
-  autorizacaoService.autorizacaoToken();
+  cy.fixture("acessos/acesso").then((x) => {
+    usuario = x;
+
+    let token;
+
+    cy.request({
+      method: "POST",
+      url: `${API}v1/Autenticacao/Login`,
+      body: usuario,
+      failOnStatusCode: false,
+    }).then((response: any) => {
+      token = response.body?.data?.token;
+
+      Cypress.env("TokenCypress", token);
+      localStorage.setItem("TokenCypress", token);
+
+      return token;
+    });
+  });
 });

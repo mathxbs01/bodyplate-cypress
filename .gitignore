@@ -49,6 +49,7 @@ Thumbs.db
 
 #JUnit
 /results/*
+/Results/*
 
 #Cypress
 /cypress/screenshots

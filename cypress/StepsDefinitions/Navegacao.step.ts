@@ -1,34 +1,29 @@
 /// <reference types="cypress" />
-import { E, LoginPage, EsqueciSenhaPage } from "../../index";
-import { IPageModel } from "../Supports/Models/Interfaces/IPages.model";
-import { FuncionalidadeType } from "../Supports/Models/Types/FuncionalidadeType.model";
+import { E } from "../../index";
+import { IPageModel } from "../supports/models/pagesModel/Ipages.model";
+import { PageModel } from "../supports/models/pagesModel/pages.model";
 
-let loginPage = new LoginPage();
-let esqueciSenhaPage = new EsqueciSenhaPage();
-
-let funcionalidadeAtual: string;
-let funcionalidadeMap: Record<FuncionalidadeType, IPageModel>;
+let funcionalidadeAtual: FuncionalidadeType;
 let page: IPageModel;
-const APIUrl: string = Cypress.env("API");
+let usuario: any;
 const URL: string = Cypress.env("BASE_URL");
 
 beforeEach(() => {
-  funcionalidadeAtual = Cypress.env("funcionalidadeAtual");
+  funcionalidadeAtual = Cypress.spec.name.split(".")[0] as FuncionalidadeType;
 
-  funcionalidadeMap = {
-    EsqueciSenha: esqueciSenhaPage,
-    Login: loginPage,
-  };
-
-  page = funcionalidadeMap[funcionalidadeAtual as FuncionalidadeType];
+  page = PageModel.getPage(funcionalidadeAtual);
 
   if (!page) {
     throw new Error(`Funcionalidade desconhecida: ${funcionalidadeAtual}`);
   }
+
+  cy.fixture("acessos/acesso").then((acessos) => {
+    usuario = acessos;
+  });
 });
 
 // Métodos associados a URL ou Navegação.
-E("que visito o Timekeeping", () => {
+E("que visito o Dix Aeroportos", () => {
   cy.wait(500);
 
   cy.visit(URL);
@@ -38,7 +33,7 @@ E("que estou na página de {string}", (tela) => {
   cy.wait(500);
 
   const urlByTela: Record<string, string> = {
-    Login: URL + "/login",
+    Login: URL,
     "Esqueci senha": URL + "/recovery-password",
   };
 
@@ -49,8 +44,21 @@ E("devo visualizar a página {string}", (tela) => {
   cy.wait(500);
 
   const urlByTela: any = {
-    "Esqueci a senha": URL + "/recovery-password",
+    Inicial: "/home",
+    "Esqueci a senha": "/recovery-password",
   };
 
-  cy.url().should("eq", urlByTela[tela]);
+  cy.url().should("eq", URL + urlByTela[tela]);
+});
+
+E("estou autenticado", () => {
+  cy.wait(500);
+
+  cy.loginUsuario(usuario.email, usuario.senha);
+});
+
+E("mudo para a aba {string}", (nomeAba) => {
+  cy.wait(500);
+
+  cy.mudarAba(nomeAba);
 });

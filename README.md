@@ -1,4 +1,4 @@
-# BODYPLATE CYPRESS
+# BOILERPLATE CYPRESS
 
 Apenas um bodyplate para apenas clonar e adaptar conforme o projeto demandar.
 
@@ -35,12 +35,12 @@ npm run test:local
 
 Para execução CLI no ambiente de desenvolvimento, basta executar o comando:
 ```
-npm run test:dev
+npm run test:FULL:dev
 ```
 
 Para execução CLI no ambiente de homologação, basta executar o comando:
 ```
-npm run test:hom
+npm run test:FULL:hom
 ```
 
 Para geração do relatório HTML cucumber:

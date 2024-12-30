@@ -1,29 +1,25 @@
 /// <reference types="cypress"/>
 
-import "./Commands/Token.command";
-import "./Commands/Elements/Botao.command";
-import "./Commands/Elements/Input.command";
-import "./Commands/Elements/Link.command";
-import "./Commands/Elements/Lista.command";
-import "./Commands/Elements/Modal.command";
-import "./Commands/Funcionalidade.command";
-import "./Service/Autenticacao.service";
-import "./Service/Common/Common.service";
+//Commands Generic
+import "./commands/token.command";
+import "./commands/login.command";
+import "./commands/common/common.command";
+import "./commands/upload.command";
+import "./commands/colapse.command";
+import "./commands/aba.command";
+//Commands Elements
+import "./commands/elements/botao.command";
+import "./commands/elements/input.command";
+import "./commands/elements/link.command";
+import "./commands/elements/lista.command";
+import "./commands/elements/modal.command";
+import "./commands/elements/menu.command";
+//Services
+import "./service/common/common.service";
 import { beforeEach } from "mocha";
 
 require("cypress-plugin-tab");
 
-beforeEach(() => {
-  Cypress.on("test:before:run", (details) => {
-    if (details.title) {
-      Cypress.env("testeAtual", details.title);
-
-      Cypress.env("funcionalidadeAtual", Cypress.spec.name.split(".")[0]);
-    }
-  });
-
-  cy.clearCookies();
-  cy.clearLocalStorage();
-});
+beforeEach(() => {});
 
 afterEach(() => {});

@@ -1,26 +1,15 @@
 /// <reference types="cypress" />
-import { E, LoginPage, EsqueciSenhaPage } from "../../index";
-import { IPageModel } from "../Supports/Models/Interfaces/IPages.model";
-import { FuncionalidadeType } from "../Supports/Models/Types/FuncionalidadeType.model";
+import { E } from "../../index";
+import { IPageModel } from "../supports/models/pagesModel/Ipages.model";
+import { PageModel } from "../supports/models/pagesModel/pages.model";
 
-let loginPage = new LoginPage();
-let esqueciSenhaPage = new EsqueciSenhaPage();
-
-let funcionalidadeAtual: string;
-let funcionalidadeMap: Record<FuncionalidadeType, IPageModel>;
+let funcionalidadeAtual: FuncionalidadeType;
 let page: IPageModel;
-const APIUrl: string = Cypress.env("API");
-const URL: string = Cypress.env("BASE_URL");
 
 beforeEach(() => {
-  funcionalidadeAtual = Cypress.env("funcionalidadeAtual");
+  funcionalidadeAtual = Cypress.spec.name.split(".")[0] as FuncionalidadeType;
 
-  funcionalidadeMap = {
-    EsqueciSenha: esqueciSenhaPage,
-    Login: loginPage,
-  };
-
-  page = funcionalidadeMap[funcionalidadeAtual as FuncionalidadeType];
+  page = PageModel.getPage(funcionalidadeAtual);
 
   if (!page) {
     throw new Error(`Funcionalidade desconhecida: ${funcionalidadeAtual}`);
@@ -29,5 +18,29 @@ beforeEach(() => {
 
 //Modal de mensagem.
 E("visualizo a mensagem {string}", (mensagem) => {
+  cy.wait(500);
+
   cy.verificarMensagemModal(mensagem);
+});
+
+E("visualizo a informação {string}", (mensagem) => {
+  cy.wait(500);
+
+  cy.verificaMensagemToast(mensagem);
+});
+
+E("visualizo a mensagem de validação {string}", (mensagem) => {
+  cy.wait(500);
+
+  cy.verificaShielError(mensagem);
+});
+
+E("devo visualizar o modal {string}", (nomeModal) => {
+  cy.wait(500);
+
+  cy.verificaModalExistente(nomeModal);
+});
+
+E("devo visualizar na coluna {string} o valor {string}", (coluna, valor) => {
+  cy.verificarValorLista(coluna, valor);
 });

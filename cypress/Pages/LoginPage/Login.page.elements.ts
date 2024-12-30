@@ -4,16 +4,16 @@ export interface ILoginPageElementsInput {
 }
 
 export interface ILoginPageElementsBotao {
-  Entrar: string;
+  "Fazer login": string;
 }
 
 export interface ILoginPageElementsLink {}
 
 export const defaultLoginElementInput: ILoginPageElementsInput = {
-  Email: "#email",
-  Senha: "#senha",
+  Email: 'input[name="e-mail"]',
+  Senha: 'input[type="password"]',
 };
 
 export const defaultLoginElementBotao: ILoginPageElementsBotao = {
-  Entrar: "Entrar",
+  "Fazer login": "Fazer login",
 };

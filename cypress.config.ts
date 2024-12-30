@@ -13,19 +13,19 @@ export default defineConfig({
 
       return config;
     },
-    specPattern: "cypress/Features/*.feature",
+    specPattern: "cypress/features/*.feature",
     reporter: "junit",
     reporterOptions: {
       mochaFile: "results/Cypress-Testes-QA-[hash].xml",
       attachments: true,
       attachmentsPath: "./cypress/screenshots",
     },
-    retries: 1,
+    // retries: 1,
     viewportWidth: 1366,
     viewportHeight: 768,
-    defaultCommandTimeout: 15000,
-    requestTimeout: 100000,
+    defaultCommandTimeout: 5000,
+    requestTimeout: 10000,
 
-    supportFile: "cypress/Supports/e2e.ts",
+    supportFile: "cypress/supports/e2e.ts",
   },
 });

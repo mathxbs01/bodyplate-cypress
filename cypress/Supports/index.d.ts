@@ -1,49 +1,86 @@
 /// <reference types="cypress" />
 
 declare namespace Cypress {
-  interface Chainable {
-    /**
-     * @param matriculaUsuario
-     * @param senhaUsuario
-     * @param nomeUsuario
-     * @param mensagem
-     * @param tipoCampo
-     * @param seletor
-     * @param textoPreenchimento
-     * @returns
-     */
-
+  interface ServicesCommands {
     loginUsuario(
-      matriculaUsuario?: string,
+      emailUsuario?: string,
       senhaUsuario?: string
     ): Chainable<Element>;
+    getToken(): Chainable<string>;
+    cadastrarMassa(massa: FuncionalidadeType): Chainable<void>;
+    excluirMassa(massa: FuncionalidadeType): Chainable<void>;
+    pesquisarMassa(
+      massa: FuncionalidadeType,
+      body?: any,
+      params?: any
+    ): Chainable<any>;
+    buscaTesteAtual(): Chainable<void>;
+    uploadDocumento(
+      tipoDocumento: TipoDocumentosType,
+      seletor: string
+    ): Chainable<void>;
+    abrirOuFecharColapse(
+      modulo: string,
+      acaoColapse: AcaoColapseType
+    ): Chainable<void>;
+    mudarAba(nomeAba: string): Chainable<void>;
+  }
 
-    getToken(): Chainable<void>;
-
+  interface InputCommands {
     escreverValorNoCampo(
       seletor: string,
-      textoPreenchimento: string
-    ): Chainable<JQuery<HTMLInputElement>>;
-
+      textoPreenchimento: string,
+      forcarEnter?: boolean
+    ): Chainable<JQuery<HTMLElement>>;
     selecionarValorNoCampo(
       seletor: string,
       textoPreenchimento: string
-    ): Chainable<JQuery<HTMLElement>>;
-
+    ): Chainable<void>;
     verificarValorCampo(
       tipoCampo: IInputTypes,
       seletor: string,
       valor: string
     ): Chainable<JQuery<HTMLElement>>;
+    verificaShielError(mensagem: string): Chainable<void>;
+    verificaRadioButtonSelecionado(seletor: string): Chainable<void>;
+    verificaCampoPreenchido(seletor: string, valor: string): Chainable<void>;
+    verificaCampoDesabilitado(seletor: string): Chainable<void>;
+    verificaOpcaoSelecionada(seletor: string, valor: string): Chainable<void>;
+  }
 
-    buscarBotaoPorTexto(
-      nomeBotao: string
-    ): Chainable<JQuery<HTMLButtonElement>>;
+  interface ButtonCommands {
+    buscarBotaoPorTexto(nomeBotao: string): Chainable<JQuery<HTMLElement>>;
+    clicarFiltroRefinado(): Chainable<void>;
+  }
 
+  interface ModalCommands {
     verificarMensagemModal(mensagem: string): Chainable<void>;
+    verificaMensagemToast(mensagem: string): Chainable<void>;
+    verificaModalExistente(nomeModal: string): Chainable<void>;
+  }
 
-    obterLista(): Chainable<void>;
+  interface ListCommands {
+    verificarValorLista(coluna: string, valor: string): Chainable<void>;
+    acaoLista(acao: AcoesListaType): Chainable<void>;
+  }
 
+  interface LinkCommands {
     obterLinkPorTexto(textoLink: string): Chainable<JQuery<HTMLAnchorElement>>;
   }
+
+  interface MenuCommands {
+    expandirMenu(): Chainable<void>;
+    clicarMenu(menu: string): Chainable<void>;
+    clicarSubMenu(subMenu: string): Chainable<void>;
+  }
+
+  // Unificação no Chainable
+  interface Chainable
+    extends ServicesCommands,
+      InputCommands,
+      ButtonCommands,
+      ModalCommands,
+      ListCommands,
+      LinkCommands,
+      MenuCommands {}
 }

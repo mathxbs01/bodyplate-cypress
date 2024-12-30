@@ -4,8 +4,8 @@ import {
   Then as Entao,
   And as E,
 } from "cypress-cucumber-preprocessor/steps";
-import { LoginPage } from "./cypress/Pages/LoginPage/Login.page";
-import { EsqueciSenhaPage } from "./cypress/Pages/EsqueciSenhaPage/EsqueciSenha.page";
+import { LoginPage } from "./cypress/pages/loginPage/login.page";
+import { EsqueciSenhaPage } from "./cypress/pages/esqueciSenhaPage/esqueciSenha.page";
 
 export {
   Dado,

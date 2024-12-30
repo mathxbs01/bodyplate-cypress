@@ -1,4 +1,4 @@
-import { IPageModel } from "../../Supports/Models/Interfaces/IPages.model";
+import { IPageModel } from "../../supports/models/pagesModel/Ipages.model";
 import {
   IEsqueciSenhaPageElementsBotao,
   IEsqueciSenhaPageElementsInput,
@@ -6,7 +6,7 @@ import {
   defaultEsqueciSenhaElementBotao,
   defaultEsqueciSenhaElementInput,
   defaultEsqueciSenhaElementLink,
-} from "../EsqueciSenhaPage/EsqueciSenha.page.elements";
+} from "./esqueciSenha.page.elements";
 
 export class EsqueciSenhaPage
   implements
@@ -16,14 +16,42 @@ export class EsqueciSenhaPage
       IEsqueciSenhaPageElementsLink
     >
 {
-  public EscreveCampo(
+  public VerificaRadioSelecionado(
+    campo: keyof IEsqueciSenhaPageElementsInput
+  ): void {
+    cy.verificaRadioButtonSelecionado(defaultEsqueciSenhaElementInput[campo]);
+  }
+
+  public VerificaValorPreenchido(
     campo: keyof IEsqueciSenhaPageElementsInput,
     valor: string
+  ): void {
+    cy.verificaCampoPreenchido(defaultEsqueciSenhaElementInput[campo], valor);
+  }
+
+  public EscreveCampo(
+    campo: keyof IEsqueciSenhaPageElementsInput,
+    valor: string,
+    forcarEnter: boolean = false
   ) {
     cy.escreverValorNoCampo(
       defaultEsqueciSenhaElementInput[campo],
-      String(valor)
+      String(valor),
+      forcarEnter
     );
+  }
+
+  public ClicaRadioButton(campo: keyof IEsqueciSenhaPageElementsInput) {
+    cy.contains("label.radio-label", defaultEsqueciSenhaElementInput[campo])
+      .find('input[type="radio"]')
+      .click();
+  }
+
+  public ClicaCheckBox(campo: keyof IEsqueciSenhaPageElementsInput) {
+    cy.contains("ion-label", defaultEsqueciSenhaElementInput[campo])
+      .parent()
+      .find("ion-checkbox")
+      .click({ force: true });
   }
 
   public LimpaCampo(campo: keyof IEsqueciSenhaPageElementsInput) {
@@ -45,10 +73,14 @@ export class EsqueciSenhaPage
   }
 
   public ClicaBotao(nomeBotao: keyof IEsqueciSenhaPageElementsBotao) {
-    cy.buscarBotaoPorTexto(defaultEsqueciSenhaElementBotao[nomeBotao]).click();
+    cy.buscarBotaoPorTexto(defaultEsqueciSenhaElementBotao[nomeBotao]).click({
+      force: true,
+    });
   }
 
   public ClicaLink(nomeHiperLink: keyof IEsqueciSenhaPageElementsLink) {
-    cy.obterLinkPorTexto(defaultEsqueciSenhaElementLink[nomeHiperLink]).click();
+    cy.obterLinkPorTexto(defaultEsqueciSenhaElementLink[nomeHiperLink]).click({
+      force: true,
+    });
   }
 }
