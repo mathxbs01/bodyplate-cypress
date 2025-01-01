@@ -4,20 +4,14 @@ import {
   Then as Entao,
   And as E,
 } from "cypress-cucumber-preprocessor/steps";
-import { BotaoElement } from "./cypress/Elements/BotaoElements/BotaoElement";
-import { InputElement } from "./cypress/Elements/InputElements/InputElements";
-import { ListaElement } from "./cypress/Elements/ListaElements/ListaElement";
-import { ModalElement } from "./cypress/Elements/ModalElements/ModalElement";
-import { LinkElement } from "./cypress/Elements/LinkElements/LinkElement";
+import { LoginPage } from "./cypress/pages/loginPage/login.page";
+import { EsqueciSenhaPage } from "./cypress/pages/esqueciSenhaPage/esqueciSenha.page";
 
 export {
   Dado,
   Quando,
   Entao,
   E,
-  BotaoElement,
-  InputElement,
-  ListaElement,
-  ModalElement,
-  LinkElement,
+  LoginPage,
+  EsqueciSenhaPage,
 };

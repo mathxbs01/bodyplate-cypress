@@ -1,10 +1,10 @@
 {
-    "nonGlobalStepDefinitions": false,
-    "step_definitions": "cypress/StepsDefinitions",
-    "cucumberJson": {
-        "generate": "true",
-        "outputFolder": "cypress/CucumberJson",
-        "filePrefix": "",
-        "fileSuffix": ".cucumber"
-    }
+  "nonGlobalStepDefinitions": false,
+  "step_definitions": "cypress/stepsDefinitions",
+  "cucumberJson": {
+    "generate": "true",
+    "outputFolder": "cypress/cucumberJson",
+    "filePrefix": "",
+    "fileSuffix": ".cucumber"
+  }
 }

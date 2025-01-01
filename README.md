@@ -1,9 +1,9 @@
-# BODYPLATE CYPRESS
+# BOILERPLATE CYPRESS:
 
 Apenas um bodyplate para apenas clonar e adaptar conforme o projeto demandar.
 
 
-# Pré requisitos
+# Pré requisitos:
 
 - Interface para linha de comando (Windows Terminal, Cmder, etc.)
     https://cmder.app
@@ -35,12 +35,7 @@ npm run test:local
 
 Para execução CLI no ambiente de desenvolvimento, basta executar o comando:
 ```
-npm run test:dev
-```
-
-Para execução CLI no ambiente de homologação, basta executar o comando:
-```
-npm run test:hom
+npm run test:FULL:dev
 ```
 
 Para geração do relatório HTML cucumber:
@@ -48,8 +43,7 @@ Para geração do relatório HTML cucumber:
 npm run report-cucumber
 ```
 
-
-# Relatório
+# Relatório:
 
 Para reporte dos testes que foram executados, será utilizado o cucumber-report para elaboração visual, onde será gerado o documento index.html através do comando:
 ```
@@ -60,3 +54,68 @@ npm run report-cucumber
 E para o reporte dos testes CI, será utilizado as tasks “PublishCucumberReport@1” e “PublishTestResults@2”. 
 A task PublishCucumberReport@1 criará um reporte simples, porém com a mesma base do Cucumber-report.
 A task PublishTestResults@2 criará um reporte mais detalhado, contendo alguma informações para métrica dos teste em conjunto com Azure TestPlan.# bodyplate-cypress
+
+# Documentação:
+
+Cypress Test Automation Project
+
+## Visão :
+
+Este projeto utiliza Cypress como ferramenta principal para automação de testes, implementando padrões arquiteturais baseados no conceito de Page Objects (PO) e Behavior Driven Development (BDD). Ele é projetado para proporcionar reaproveitamento, manutenção facilitada e padronização na escrita e execução de testes automatizados.
+
+## Estrutura do Projeto:
+
+1. Features
+
+- Contém os arquivos .feature escritos em Gherkin.
+- Utiliza as instruções: Dado, Quando, E, Então.
+- Boa prática: evitar repetição de passos e usar variáveis para valores dinâmicos.
+
+2. Step Definitions
+
+- Converte os cenários escritos em Gherkin para execuções baseadas em código.
+- Dividido em três categorias:
+    - Escrita: Cadastro, edição ou exclusão.
+    - Leitura: Consulta e mensagens de resposta.
+    - Navegação: Mudanças de página.
+
+3. Pages
+- Implementação de ações e elementos de cada página.
+- Dividido em:
+    - Ações das Páginas: Escrever em campos, clicar em botões, etc.
+    - Elementos das Páginas: Tipagem e seleção de elementos DOM.
+
+4. Fixtures
+- Armazena payloads e dados sensíveis para utilização nos testes.
+- Organizado por telas/pages.
+
+5. Supports
+a) Commands
+- Cria comandos personalizados usando Cypress.Commands.
+- Exemplo:
+``` 
+cy.buscarBotaoPorTexto('Enviar').
+```
+
+b) Models
+- Responsável pela tipagem e mapeamento das páginas.
+- Exemplo: 
+```
+PageModel.getPage('Login').
+```
+
+c) Services
+- Realiza chamadas REST APIs para testes de contratos ou geração de massas de dados.
+
+# Passo-a-Passo para Criar Testes:
+
+- Criar arquivo .feature:
+    - Escreva os cenários utilizando Gherkin.
+- Adicionar classe Page:
+    - Crie a classe .page.ts e implemente a interface IPageModel.
+    - Inclua os elementos em .page.elements.ts.
+- Atualizar FuncionalidadeType:
+    - Adicione o nome da funcionalidade no arquivo FuncionalidadeType.model.ts.
+- Criar Step Definitions:
+    - Implemente os passos correspondentes aos cenários da feature.
+    - Verifique se o passo já existe antes de criar.

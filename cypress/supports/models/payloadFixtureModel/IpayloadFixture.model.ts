@@ -1,0 +1,1 @@
+//Incluir a interface do Payload vinculado as requests a serem realizadas para geração de massa.
