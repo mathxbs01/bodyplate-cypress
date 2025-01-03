@@ -4,18 +4,8 @@ parameters:
   type: string
   default: FULL:dev
   values:
-  - FULL:dev
-  - local
-  - aeroporto
-  - empresa
-  - empresaPrincipal
   - esqueciSenha
-  - localAcesso
   - login
-  - mapaArea
-  - perfil
-  - usuario
-  - gestaoUsuario
   
 stages:
 - stage: __default
