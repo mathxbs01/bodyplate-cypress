@@ -1,7 +1,7 @@
 /// <reference types="cypress"/>
 
-import { HttpClient } from "../../service/common/common.service";
-import { IPayloadFixtures } from "./Icommon.command";
+import { HttpClient } from "../../service/httpService/http.service";
+import { IPayloadFixtures } from "./Ihttp.command";
 type IFixture = {
   key: keyof IPayloadFixtures;
   path: string;
@@ -23,8 +23,6 @@ beforeEach(() => {
       payloads[key] = data;
     });
   });
-
-  cy.getToken();
 });
 
 Cypress.Commands.add("cadastrarMassa", (massa: FuncionalidadeType) => {});
