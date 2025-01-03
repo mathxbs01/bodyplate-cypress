@@ -1,5 +1,5 @@
 /// <reference types="cypress"/>
-import { IAPIDelete, IAPIGet, IAPIPost, IAPIPut } from "./common.model";
+import { IAPIDelete, IAPIGet, IAPIPost, IAPIPut } from "./http.model";
 
 const APIUrl = Cypress.env("API");
 const API = APIUrl;
