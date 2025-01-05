@@ -29,6 +29,7 @@
     "@cypress/browserify-preprocessor": "^3.0.2",
     "@types/node": "^22.10.1",
     "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress-sql-server": "^1.0.0",
     "typescript": "^5.7.2"
   }
 }

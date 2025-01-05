@@ -1,15 +1,17 @@
 import { defineConfig } from "cypress";
 import browserify from "@cypress/browserify-preprocessor";
-import fs from "fs";
-
 const cucumber = require("cypress-cucumber-preprocessor").default;
+const sqlServer = require("cypress-sql-server");
 
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       const options = browserify.defaultOptions;
+      const tasks = sqlServer.loadDBPlugin(config.env.db);
       options.typescript = require.resolve("typescript");
+
       on("file:preprocessor", cucumber(options));
+      on("task", { ...tasks });
 
       return config;
     },
