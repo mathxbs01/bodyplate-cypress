@@ -7,6 +7,7 @@ import "./commands/httpCommands/http.command";
 import "./commands/upload.command";
 import "./commands/colapse.command";
 import "./commands/aba.command";
+import "./commands/dbCommands/db.command";
 //Commands Elements
 import "./commands/elementsCommands/botao.command";
 import "./commands/elementsCommands/input.command";
@@ -18,7 +19,9 @@ import "./commands/elementsCommands/menu.command";
 import "./service/httpService/http.service";
 import { beforeEach } from "mocha";
 
-require("cypress-plugin-tab");
+const sqlServer = require("cypress-sql-server");
+
+sqlServer.loadDBCommands();
 
 beforeEach(() => {});
 

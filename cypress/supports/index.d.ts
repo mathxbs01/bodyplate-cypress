@@ -74,6 +74,14 @@ declare namespace Cypress {
     clicarSubMenu(subMenu: string): Chainable<void>;
   }
 
+  interface SqlQueryCommand {
+    sqlServer(query: string): Chainable<any>;
+  }
+
+  interface DbCommands {
+    dbDelete(): Chainable<any>;
+  }
+
   // Unificação no Chainable
   interface Chainable
     extends ServicesCommands,
@@ -82,5 +90,7 @@ declare namespace Cypress {
       ModalCommands,
       ListCommands,
       LinkCommands,
-      MenuCommands {}
+      MenuCommands,
+      SqlQueryCommand,
+      DbCommands {}
 }
