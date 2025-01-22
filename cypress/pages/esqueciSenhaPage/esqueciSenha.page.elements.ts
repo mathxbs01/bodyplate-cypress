@@ -1,25 +1,25 @@
-export interface IEsqueciSenhaPageElementsInput {
+export interface IEsqueciSenhaPageElementsInput extends ValidatableObject {
   Email: string;
 }
 
-export interface IEsqueciSenhaPageElementsBotao {
+export interface IEsqueciSenhaPageElementsBotao extends ValidatableObject {
   Enviar: string;
   Voltar: string;
 }
 
-export interface IEsqueciSenhaPageElementsLink {
+export interface IEsqueciSenhaPageElementsLink extends ValidatableObject {
   "Esqueci minha senha": string;
 }
 
-export const defaultEsqueciSenhaElementInput: IEsqueciSenhaPageElementsInput = {
+export const esqueciSenhaElementInput: IEsqueciSenhaPageElementsInput = {
   Email: 'app-modal-input input[name="e-mail"]',
 };
 
-export const defaultEsqueciSenhaElementBotao: IEsqueciSenhaPageElementsBotao = {
+export const esqueciSenhaElementBotao: IEsqueciSenhaPageElementsBotao = {
   Enviar: "Enviar",
   Voltar: "Voltar",
 };
 
-export const defaultEsqueciSenhaElementLink: IEsqueciSenhaPageElementsLink = {
+export const esqueciSenhaElementLink: IEsqueciSenhaPageElementsLink = {
   "Esqueci minha senha": "Esqueci minha senha",
 };

@@ -3,9 +3,9 @@ import {
   IEsqueciSenhaPageElementsBotao,
   IEsqueciSenhaPageElementsInput,
   IEsqueciSenhaPageElementsLink,
-  defaultEsqueciSenhaElementBotao,
-  defaultEsqueciSenhaElementInput,
-  defaultEsqueciSenhaElementLink,
+  esqueciSenhaElementBotao,
+  esqueciSenhaElementInput,
+  esqueciSenhaElementLink,
 } from "./esqueciSenha.page.elements";
 
 export class EsqueciSenhaPage
@@ -19,14 +19,19 @@ export class EsqueciSenhaPage
   public VerificaRadioSelecionado(
     campo: keyof IEsqueciSenhaPageElementsInput
   ): void {
-    cy.verificaRadioButtonSelecionado(defaultEsqueciSenhaElementInput[campo]);
+    cy.verificaRadioButtonSelecionado(
+      esqueciSenhaElementInput.validaElemento(campo)
+    );
   }
 
   public VerificaValorPreenchido(
     campo: keyof IEsqueciSenhaPageElementsInput,
     valor: string
   ): void {
-    cy.verificaCampoPreenchido(defaultEsqueciSenhaElementInput[campo], valor);
+    cy.verificaCampoPreenchido(
+      esqueciSenhaElementInput.validaElemento(campo),
+      valor
+    );
   }
 
   public EscreveCampo(
@@ -35,31 +40,32 @@ export class EsqueciSenhaPage
     forcarEnter: boolean = false
   ) {
     cy.escreverValorNoCampo(
-      defaultEsqueciSenhaElementInput[campo],
+      esqueciSenhaElementInput.validaElemento(campo),
       String(valor),
       forcarEnter
     );
   }
 
   public ClicaRadioButton(campo: keyof IEsqueciSenhaPageElementsInput) {
-    cy.contains("label.radio-label", defaultEsqueciSenhaElementInput[campo])
+    cy.contains(
+      "label.radio-label",
+      esqueciSenhaElementInput.validaElemento(campo)
+    )
       .find('input[type="radio"]')
       .click();
   }
 
   public ClicaCheckBox(campo: keyof IEsqueciSenhaPageElementsInput) {
-    cy.contains("ion-label", defaultEsqueciSenhaElementInput[campo])
+    cy.contains("ion-label", esqueciSenhaElementInput.validaElemento(campo))
       .parent()
       .find("ion-checkbox")
       .click({ force: true });
   }
 
   public LimpaCampo(campo: keyof IEsqueciSenhaPageElementsInput) {
-    cy.get(
-      defaultEsqueciSenhaElementInput[
-        campo as keyof IEsqueciSenhaPageElementsInput
-      ]
-    ).clear({ force: true });
+    cy.get(esqueciSenhaElementInput.validaElemento(campo)).clear({
+      force: true,
+    });
   }
 
   public SelecionarValor(
@@ -67,19 +73,23 @@ export class EsqueciSenhaPage
     valor: string
   ) {
     cy.selecionarValorNoCampo(
-      defaultEsqueciSenhaElementInput[campo],
+      esqueciSenhaElementInput.validaElemento(campo),
       String(valor)
     );
   }
 
   public ClicaBotao(nomeBotao: keyof IEsqueciSenhaPageElementsBotao) {
-    cy.buscarBotaoPorTexto(defaultEsqueciSenhaElementBotao[nomeBotao]).click({
+    cy.buscarBotaoPorTexto(
+      esqueciSenhaElementBotao.validaElemento(nomeBotao)
+    ).click({
       force: true,
     });
   }
 
   public ClicaLink(nomeHiperLink: keyof IEsqueciSenhaPageElementsLink) {
-    cy.obterLinkPorTexto(defaultEsqueciSenhaElementLink[nomeHiperLink]).click({
+    cy.obterLinkPorTexto(
+      esqueciSenhaElementLink.validaElemento(nomeHiperLink)
+    ).click({
       force: true,
     });
   }

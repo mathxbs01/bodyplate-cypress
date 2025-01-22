@@ -1,19 +1,19 @@
-export interface ILoginPageElementsInput {
+export interface ILoginPageElementsInput extends ValidatableObject {
   Email: string;
   Senha: string;
 }
 
-export interface ILoginPageElementsBotao {
+export interface ILoginPageElementsBotao extends ValidatableObject {
   "Fazer login": string;
 }
 
 export interface ILoginPageElementsLink {}
 
-export const defaultLoginElementInput: ILoginPageElementsInput = {
+export const loginElementInput: ILoginPageElementsInput = {
   Email: 'input[name="e-mail"]',
   Senha: 'input[type="password"]',
 };
 
-export const defaultLoginElementBotao: ILoginPageElementsBotao = {
+export const loginElementBotao: ILoginPageElementsBotao = {
   "Fazer login": "Fazer login",
 };
