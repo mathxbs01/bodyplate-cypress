@@ -37,7 +37,7 @@ E("que estou na página de {string}", (tela) => {
     "Esqueci senha": URL + "/recovery-password",
   };
 
-  cy.url().should("eq", urlByTela[tela]);
+  cy.url().should("eq", urlByTela.validaTela(tela));
 });
 
 E("devo visualizar a página {string}", (tela) => {
@@ -48,7 +48,7 @@ E("devo visualizar a página {string}", (tela) => {
     "Esqueci a senha": "/recovery-password",
   };
 
-  cy.url().should("eq", URL + urlByTela[tela]);
+  cy.url().should("eq", URL + urlByTela.validaTela(tela));
 });
 
 E("estou autenticado", () => {

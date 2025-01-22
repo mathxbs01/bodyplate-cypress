@@ -17,6 +17,8 @@ import "./commands/elementsCommands/modal.command";
 import "./commands/elementsCommands/menu.command";
 //Services
 import "./service/httpService/http.service";
+import "./service/validation/mapElementValidation.service";
+
 import { beforeEach } from "mocha";
 
 const sqlServer = require("cypress-sql-server");

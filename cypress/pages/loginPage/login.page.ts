@@ -1,7 +1,7 @@
 import { IPageModel } from "../../supports/models/pagesModel/Ipages.model";
 import {
-  defaultLoginElementInput,
-  defaultLoginElementBotao,
+  loginElementInput,
+  loginElementBotao,
   ILoginPageElementsInput,
   ILoginPageElementsBotao,
   ILoginPageElementsLink,
@@ -15,15 +15,11 @@ export class LoginPage
       ILoginPageElementsLink
     >
 {
-  public VerificaRadioSelecionado(campo: keyof ILoginPageElementsInput): void {
-    cy.verificaRadioButtonSelecionado(defaultLoginElementInput[campo]);
-  }
-
   public VerificaValorPreenchido(
     campo: keyof ILoginPageElementsInput,
     valor: string
   ): void {
-    cy.verificaCampoPreenchido(defaultLoginElementInput[campo], valor);
+    cy.verificaCampoPreenchido(loginElementInput[campo], valor);
   }
 
   public EscreveCampo(
@@ -32,40 +28,23 @@ export class LoginPage
     forcarEnter: boolean = false
   ) {
     cy.escreverValorNoCampo(
-      defaultLoginElementInput[campo],
+      loginElementInput.validaElemento(campo),
       String(valor),
       forcarEnter
     );
   }
 
-  public ClicaRadioButton(campo: keyof ILoginPageElementsInput) {
-    cy.contains("label.radio-label", defaultLoginElementInput[campo])
-      .find('input[type="radio"]')
-      .click();
-  }
-
-  public ClicaCheckBox(campo: keyof ILoginPageElementsInput) {
-    cy.contains("ion-label", defaultLoginElementInput[campo])
-      .parent()
-      .find("ion-checkbox")
-      .click({ force: true });
-  }
-
   public LimpaCampo(campo: keyof ILoginPageElementsInput) {
-    cy.get(
-      defaultLoginElementInput[campo as keyof ILoginPageElementsInput]
-    ).clear({ force: true });
-  }
-
-  public SelecionarValor(campo: keyof ILoginPageElementsInput, valor: string) {
-    cy.selecionarValorNoCampo(defaultLoginElementInput[campo], String(valor));
-  }
-
-  public ClicaBotao(nomeBotao: keyof ILoginPageElementsBotao) {
-    cy.buscarBotaoPorTexto(defaultLoginElementBotao[nomeBotao]).click({
+    cy.get(loginElementInput.validaElemento(campo)).clear({
       force: true,
     });
   }
 
-  public ClicaLink(nomeHiperLink: keyof ILoginPageElementsLink) {}
+  public ClicaBotao(nomeBotao: keyof ILoginPageElementsBotao) {
+    cy.buscarBotaoPorTexto(
+      loginElementBotao.validaElemento(nomeBotao)
+    ).click({
+      force: true,
+    });
+  }
 }
